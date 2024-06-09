@@ -1,6 +1,6 @@
 package models
 
-var beachVacationThreshold float64 = 32
+var beachVacationThreshold float64 = 28
 var skiVacationThreshold float64 = -2
 
 type city struct {

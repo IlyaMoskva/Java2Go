@@ -1,0 +1,37 @@
+[
+    {
+        "id":       "ldn",
+        "name": "London",
+        "tempC": 23,
+        "hasBeach": false,
+        "hasMountains":false
+    },
+    {
+        "id":       "bar",
+        "name": "Barcelona",
+        "tempC": 30.5,
+        "hasBeach": true,
+        "hasMountains":false
+    },
+    {
+        "id":       "nyc",
+        "name": "New York",
+        "tempC": 28,
+        "hasBeach": true,
+        "hasMountains":false
+    },
+    {
+        "id":       "ant",
+        "name": "St. Anton",
+        "tempC": -2,
+        "hasBeach": false,
+        "hasMountains":true
+    },
+    {
+        "id":       "asp",
+        "name": "Aspen",
+        "tempC": -5,
+        "hasBeach": false,
+        "hasMountains":true
+    }
+]
