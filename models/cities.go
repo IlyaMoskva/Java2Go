@@ -1,6 +1,9 @@
 package models
 
-import "javago/data"
+import (
+	"javago/data"
+	"sort"
+)
 
 type cities struct {
 	cityMap map[string]CityTemp
@@ -30,5 +33,13 @@ func (c cities) ListAll() []CityTemp {
 	for _, rc := range c.cityMap {
 		cs = append(cs, rc)
 	}
+	SortAlphabetically(cs)
 	return cs
+}
+
+// Sorts the slice in abc order, as map is not ordered
+func SortAlphabetically(cs []CityTemp) {
+	sort.Slice(cs, func(i, j int) bool {
+		return cs[i].Name() < cs[j].Name()
+	})
 }
