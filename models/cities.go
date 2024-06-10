@@ -3,6 +3,7 @@ package models
 import (
 	"javago/data"
 	"sort"
+	"strings"
 )
 
 type cities struct {
@@ -10,7 +11,7 @@ type cities struct {
 }
 
 type Cities interface {
-	ListAll() []CityTemp
+	Filter(q CityQuery) []CityTemp
 }
 
 func NewCities(reader data.DataReader) (Cities, error) {
@@ -28,7 +29,39 @@ func NewCities(reader data.DataReader) (Cities, error) {
 	}, nil
 }
 
-func (c cities) ListAll() []CityTemp {
+func (c cities) Filter(q CityQuery) []CityTemp {
+	if !q.Beach() && !q.Ski() && q.Name() != "" {
+		return c.listAll()
+	}
+	return c.filterHelper(q)
+}
+
+func (c cities) filterHelper(q CityQuery) []CityTemp {
+	var cs []CityTemp
+	for _, rc := range c.cityMap {
+		if matchFilter(rc, q) {
+			cs = append(cs, rc)
+		}
+	}
+	SortAlphabetically(cs)
+	return cs
+}
+
+func matchFilter(rc CityTemp, q CityQuery) bool {
+	if q.Beach() && rc.BeachVacationReady(q) {
+		return true
+	}
+	if q.Ski() && rc.SkiVacationReady(q) {
+		return true
+	}
+	if q.Name() != "" && strings.Contains(
+		strings.ToLower(rc.Name()), q.Name()) {
+		return true
+	}
+	return false
+}
+
+func (c cities) listAll() []CityTemp {
 	var cs []CityTemp
 	for _, rc := range c.cityMap {
 		cs = append(cs, rc)

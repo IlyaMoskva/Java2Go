@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"javago/data"
 	"javago/models"
@@ -9,6 +10,18 @@ import (
 
 func main() {
 	fmt.Println("Welcome to Vacation Planner. v.0.2")
+
+	beachReady := flag.Bool("beach", false, "Display only beach ready places")
+	skiReady := flag.Bool("ski", false, "Display only ski ready places")
+	name := flag.String("name", "", "Display the city with given Name")
+	month := flag.Int("month", 0, "Show availability in month")
+	flag.Parse()
+
+	cq, err := models.NewQuery(*beachReady, *skiReady, *month, *name)
+	if err != nil {
+		fmt.Println("Fatal error while reading params: ", err)
+		return
+	}
 
 	cities, err := models.NewCities(data.NewReader())
 	if err != nil {
@@ -20,8 +33,10 @@ func main() {
 	defer p.Cleanup()
 	p.CityHeader()
 
-	for _, c := range cities.ListAll() {
-		p.CityDetails(c)
+	// Filter by flags
+	cs := cities.Filter(cq)
+	for _, c := range cs {
+		p.CityDetails(c, cq)
 	}
 
 	/* set cities

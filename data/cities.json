@@ -2,35 +2,35 @@
     {
         "id":       "ldn",
         "name": "London",
-        "tempC": 23,
+        "tempC": [5,7,9,11,14,16,19,19,17,13,10,7],
         "hasBeach": false,
         "hasMountains":false
     },
     {
         "id":       "bar",
         "name": "Barcelona",
-        "tempC": 30.5,
+        "tempC": [5,5,8,10,12,20,30,35,35,30,25,15,10],
         "hasBeach": true,
         "hasMountains":false
     },
     {
         "id":       "nyc",
         "name": "New York",
-        "tempC": 28,
+        "tempC": [-5,5,8,10,12,20,28,30,30,20,10,3,-7],
         "hasBeach": true,
         "hasMountains":false
     },
     {
         "id":       "ant",
         "name": "St. Anton",
-        "tempC": -2,
+        "tempC": [-10,-9,-5,-3,0,5,10,12,7,3,0,-6],
         "hasBeach": false,
         "hasMountains":true
     },
     {
         "id":       "asp",
         "name": "Aspen",
-        "tempC": -5,
+        "tempC": [-15,-13,-10,-5,0,5,7,8,7,-1,-9,-16],
         "hasBeach": false,
         "hasMountains":true
     }

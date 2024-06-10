@@ -1,35 +1,35 @@
 package models
 
-var beachVacationThreshold float64 = 28
+var beachVacationThreshold float64 = 25
 var skiVacationThreshold float64 = -2
 
 type city struct {
 	name         string
-	tempC        float64
+	tempC        []float64
 	hasBeach     bool
 	hasMountains bool
 }
 
 // BeachVacationReady implements CityTemp.
-func (c *city) BeachVacationReady() bool {
-	return c.hasBeach && c.tempC > beachVacationThreshold
+func (c *city) BeachVacationReady(q CityQuery) bool {
+	return c.hasBeach && c.tempC[q.Month()] > beachVacationThreshold
 }
 
 // SkiVacationReady implements CityTemp.
-func (c *city) SkiVacationReady() bool {
+func (c *city) SkiVacationReady(q CityQuery) bool {
 	return c.hasMountains &&
-		c.tempC < skiVacationThreshold
+		c.tempC[q.Month()] < skiVacationThreshold
 }
 
 type CityTemp interface {
 	Name() string
-	TempC() float64
-	TempF() float64
-	BeachVacationReady() bool
-	SkiVacationReady() bool
+	TempC(q CityQuery) float64
+	TempF(q CityQuery) float64
+	BeachVacationReady(q CityQuery) bool
+	SkiVacationReady(q CityQuery) bool
 }
 
-func NewCity(n string, t float64, hasBeach bool, hasMountains bool) CityTemp {
+func NewCity(n string, t []float64, hasBeach bool, hasMountains bool) CityTemp {
 	return &city{
 		name:         n,
 		tempC:        t,
@@ -42,20 +42,10 @@ func (c city) Name() string {
 	return c.name
 }
 
-func (c city) TempC() float64 {
-	return c.tempC
+func (c city) TempC(q CityQuery) float64 {
+	return c.tempC[q.Month()]
 }
 
-func (c city) TempF() float64 {
-	return (c.tempC * 9 / 5) + 32
+func (c city) TempF(q CityQuery) float64 {
+	return (c.tempC[q.Month()] * 9 / 5) + 32
 }
-
-/*
-func BeachVacationReady(c city) bool {
-	return c.tempC > beachVacationThreshold && c.hasBeach
-}
-
-func SkiVacationReady(c city) bool {
-	return c.tempC < skiVacationThreshold && c.hasMountains
-}
-*/
